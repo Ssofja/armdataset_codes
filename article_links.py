@@ -6,6 +6,7 @@ import time
 
 BASE = 'https://www.infocom.am'
 PATH = '/home/sofia/Desktop/url/Infocom/news_links.txt'
+CAT_PATH = '/home/sofia/Desktop/url/Infocom/catheg_links.txt'
 
 
 def get_page_news_links(page):
