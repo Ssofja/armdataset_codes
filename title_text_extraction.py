@@ -1,9 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+import json
 
 
 url = 'https://www.infocom.am/hy/Article/63274'
+
 
 def requestText(url):
     request = ''
@@ -33,7 +35,10 @@ def main():
         if len(txt_div) > 0:
             text = txt_div[0].text
             texts_aray += text + '\n'
-    print(title + '\n', texts_aray)
+
+    exe = {'Title': title, 'Text': texts_aray}
+    to_json = json.dumps(exe, ensure_ascii=False)
+    print(to_json)
 
 
 
