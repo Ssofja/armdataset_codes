@@ -5,6 +5,7 @@ import json
 
 
 url = 'https://www.infocom.am/hy/Article/63274'
+PATH = '/home/sofia/Desktop/url/Infocom/63274.json'
 
 
 def requestText(url):
@@ -21,7 +22,6 @@ def requestText(url):
 
 
 def main():
-
     req = requestText(url)
     bsoup = BeautifulSoup(req.content, 'html.parser')
     title_h1 = bsoup.find('h1', class_='news-title')
@@ -37,8 +37,10 @@ def main():
             texts_aray += text + '\n'
 
     exe = {'Title': title, 'Text': texts_aray}
-    to_json = json.dumps(exe, ensure_ascii=False)
-    print(to_json)
+    with open(PATH, 'a') as f:
+        json.dump(exe, f, ensure_ascii=False, indent=4)
+
+main()
 
 
 
