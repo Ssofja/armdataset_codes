@@ -29,11 +29,16 @@ def main():
         file_content = file1.read()
         lines = file_content.splitlines()
         for id,line in enumerate(lines):
-
+            if id < 14504:
+                continue
             req = requestText(line)
             bsoup = BeautifulSoup(req.content, 'html.parser')
             title_h1 = bsoup.find('h1', class_='news-title')
-            title = title_h1.text.strip()
+            try:
+                title = title_h1.text.strip()
+            except:
+                continue
+
             divs = bsoup.find('div', class_='col-sm col-md-7 offset-md-1')
             children_divs = divs.findChildren('div')
             texts_aray = ''
@@ -45,14 +50,13 @@ def main():
                         texts_aray += text + '\n'
             else:
                 array_p = divs.find('p')
-                for children_p in divs:
+                for p in array_p:
                     try:
-                        text = children_p.text
+                        text = p.text
                     except:
                         continue
-                    if text.strip()!= '':
-                        texts_aray += children_p.text + '\n'
-
+                    if text.strip() != '':
+                        texts_aray += p.text + '\n'
             exe = {'title': title, 'text': texts_aray}
             file_name = f'article{id}'
             with open(os.path.join(PATH, file_name), 'a') as f:
