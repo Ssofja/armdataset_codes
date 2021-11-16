@@ -11,13 +11,19 @@ PATH = '/home/sofia/Desktop/url/TertAM/json'
 
 def requestText(url):
     request = ''
-    while request == '':
+    counter = 0
+    while request == '' and counter < 5:
         try:
             request = requests.get(url)
             if request.status_code != 200:
                 request = ''
+            if request.status_code == 404:
+                break
+            else:
+                break
         except:
             time.sleep(5)
+            counter += 1
             continue
     return request
 
@@ -27,9 +33,11 @@ def main():
         file_content = file1.read()
         lines = file_content.splitlines()
         for id, line in enumerate(lines):
-            if id < 16711:
+            if id < 235910:
                 continue
             req = requestText(line)
+            if req == '':
+                continue
             bsoup = BeautifulSoup(req.content, 'html.parser')
             title_h1 = bsoup.find('h1', class_='inner-content__article-title fb fs20')
             try:
